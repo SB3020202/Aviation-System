@@ -4,28 +4,24 @@
 #include <time.h>
 
 
-	typedef struct Dados_para_cada_lugar {
 
-		char ocupado;             
-		char name[100];
-		char checked_in;
-		int id_luggage;
-		int id_reservation_code;
-	
-	}DADOS_PARA_CADA_LUGAR;
+typedef struct Dados_para_cada_lugar {
+	char ocupado;             
+	char name[100];
+	char checked_in;
+	int id_luggage;
+	int id_reservation_code;
+}DADOS_PARA_CADA_LUGAR;
 	
 
 void help( ) {
-	   puts("     Sintax:  ./rsrv1  flight_name    aircraft_type");  
-         	   puts("	     or:  ./rsrv1  aircraftType");   
-
-    	   puts("     Example:  ./rsrv1  TP1048      A318"); 
-        	   puts("  	     or:  ./rsrv1  A318");  
+	   puts("Sintax:  ./rsrv1  flight_name    aircraft_type");  
+           puts("or:  ./rsrv1  aircraftType");   
+    	   puts("Example:  ./rsrv1  TP1048      A318"); 
+           puts("or:  ./rsrv1  A318");  
 }
 int menu() {
-
 	int input=0;
-
 	puts("     Aircraft Business ");
 	puts("0 - Exit ");
 	puts("1 - Show the structure of a plane");
@@ -45,17 +41,14 @@ return input;
 	 
 	
 int n_filas_excutivas_turisticas_de_Airbus3xx( char file_name_[] , int *turi, int *excu ) {      	
-	
 	int i= 1;			
 	FILE *fp= fopen( file_name_, "r");
 	char filas [7];
 	
-   
 	if( fp==NULL) { /* No caso de o ficheiro n puder ser aberto*/
-		printf("Error opening file %s. Please correct it\n", file_name_);
-		i= -1;
+	    printf("Error opening file %s. Please correct it\n", file_name_);
+	    i= -1;
 	}
-	
 	else {
 		while( fscanf( fp, "%s", filas ) !=EOF) { /* enontra posi para onde pf esta a apontar, le strings e coloca as em filas ate o final do ficheiro*/
 			if( filas[4]=='\0') {
@@ -71,17 +64,11 @@ int n_filas_excutivas_turisticas_de_Airbus3xx( char file_name_[] , int *turi, in
 return i;
 }
 
-/*4444444444444444444444444444444444444444444444444444444444.11111111111111111111111111111111111111111111111111111*/
-
 int Mostrar_estrutura_aviao( int argc_, char argv_[] ) { 
-	
 	char aircraft_type[5];
-	char file_name[10]= "Airbus";
-   // n_filas_xxx	
-        	int n_filas_turisticas=0, n_filas_excutivas=0;
-	
+	char file_name[10]= "Airbus";	
+        int n_filas_turisticas=0, n_filas_excutivas=0; // n_filas_xxx
 	if( argc_==2 ) {
-	
 		file_name[6]= argv_[1];
 		file_name[7]= argv_[2];
 		file_name[8]= argv_[3];
@@ -91,27 +78,20 @@ int Mostrar_estrutura_aviao( int argc_, char argv_[] ) {
 	else if( argc_ ==1 ) {
 		printf("Please indicate the aircraft type (Ex: A318): ");
 		scanf(" %4s", aircraft_type );          // string     
-
 		file_name[6]= aircraft_type[1];
 		file_name[7]= aircraft_type[2];
 		file_name[8]= aircraft_type[3];		
 		file_name[9]= aircraft_type[4];
 		n_filas_excutivas_turisticas_de_Airbus3xx( file_name , &n_filas_turisticas, &n_filas_excutivas );
 	}
-	if (  n_filas_turisticas!=0) {
-		printf("\n     %s:  Excutive rows = %d, Turistic rows = %d\n\n\n\n", file_name, n_filas_excutivas, n_filas_turisticas);
+	if (n_filas_turisticas!=0) {
+	       printf("\n     %s:  Excutive rows = %d, Turistic rows = %d\n\n\n\n", file_name, n_filas_excutivas, n_filas_turisticas);
 	}
 	
-
 return 0;			
 }
- /*44444444444444444444444444444444444444444444444444444444444444444444444444444.2222222222222222222222222222222222222222222222222222222222222222222222222222222222*/
-
-
 void Mostrar_ocupacao_voo_auxiliar ( FILE *fp, int n_lugares_excutiva, int n_lugares_turistica ) {  /* Recebe binary file*/
-
-	int i=0, ascii= 97, trocar_letra= 1, numero_=1 ;
-	// p, trocar_letra, numero=1, ascii= 97; 
+	int i=0, ascii= 97, trocar_letra= 1, numero_=1 ; // p, trocar_letra, numero=1, ascii= 97; 
 	int l=0, c=0;
 	
 //	int saber_qnd_printar_numeros= 1;
@@ -235,19 +215,12 @@ int Mostrar_ocupacao_voo () {
 return 0;
 }
 
-	
-			/*4444444444444444444444444444444444444444444444444444444444444444444444.33333333333333333333333333333333333333333333333333333333333333333*/
-
 /*Funcao serve para mostar o resultado*/  
 void Mostar_nome_passageiros_com_reservas_num_voo_auxliar( FILE *fp_ , int n_lugares_turistica, int n_lugares_excutiva ) {	
-		
 	DADOS_PARA_CADA_LUGAR lugar_voo_info_318[n_lugares_turistica + n_lugares_excutiva];	
 	int row= 1, seat= 97;
-
 	int percorre= 0;				
 	int n_lugares_total= n_lugares_turistica + n_lugares_excutiva;
-
-
 	fseek(fp_, 4, SEEK_SET);	
 	puts("Passagers");
 	
@@ -263,8 +236,7 @@ void Mostar_nome_passageiros_com_reservas_num_voo_auxliar( FILE *fp_ , int n_lug
 /* Fazer print da parte Excutiva*/
 	puts("   Excutive:");
 	percorre= 0;
-	while( percorre< n_lugares_excutiva ) {   
-		
+	while( percorre< n_lugares_excutiva ) {   	
 		if( ((int)(lugar_voo_info_318[percorre].ocupado))==1 ){
 			printf("	  Row %d, seat %c, name %s\n", row, seat, lugar_voo_info_318[percorre].name );
 		}		 	
@@ -293,22 +265,18 @@ void Mostar_nome_passageiros_com_reservas_num_voo_auxliar( FILE *fp_ , int n_lug
 		seat++;
 	}	
 /*Fazer print da parte Turistica*/
-
-
-
 	
 }
 
 /* Funcao serve para por de forma completa o nome  do aviao*/ 
 int Mostar_nome_passageiros_com_reservas_num_voo() {
-
 	char fligth_file_name[256]= {0}, file_name_aviao[10]= "Airbus",  aux_guarda_aviao_numero[4]= {0};
 	int n_aviao= 0; 
 	int n_filas_turisticas=0, n_filas_excutivas=0;  
 	printf("Show the passenger names with a reservation for this flight ");
 	scanf(" %s", fligth_file_name ); 
 	
-// After sucefully getting the strings
+// After successfully getting the strings
 
 	FILE *fp_= fopen( fligth_file_name, "rb" );   
 						
@@ -324,7 +292,6 @@ int Mostar_nome_passageiros_com_reservas_num_voo() {
 		
 		n_filas_excutivas_turisticas_de_Airbus3xx( file_name_aviao , &n_filas_turisticas, &n_filas_excutivas );
 		
-	
 		if ( n_aviao==318 ) {  /*Caso seja:  Airbus318*/
 			Mostar_nome_passageiros_com_reservas_num_voo_auxliar( fp_ ,n_filas_turisticas*6, n_filas_excutivas*4 );
 		}			
@@ -347,10 +314,8 @@ int Mostar_nome_passageiros_com_reservas_num_voo() {
 	}
 return 0;
 
-}	/*55555555555555555555555555555555555555555555555555555555555555555555555555555555555.111111111111111111111111111111111111111111111111111111111111111111111111111111*/	
-
+}
 void Efetuar_reserva_de_um_voo() {   
-	
 	char fligth_file_name[256]= {0}, plane_file_name[10]="Airbus";
 	char n_aviao_str[4]= {0};
 	char current_seat[2]= {0}; 
@@ -433,46 +398,39 @@ void Efetuar_reserva_de_um_voo() {
 			
 		/*descobriir lugar currente*/
 			if( (current_row_number<= n_filas_excutivas) && ( (current_seat[0]=='a') || (current_seat[0]=='b') || (current_seat[0]=='c') || (current_seat[0]=='d') )) {
-	
-						if( current_seat[0]=='a' ){
-							encontrei_lugar=1;
-						}
-						else if( current_seat[0]=='b' ){
-							encontrei_lugar=2;
-						}					
-						else if( current_seat[0]=='c' ){
-							encontrei_lugar=3;
-						}					
-						else if( current_seat[0]=='d' ){
-							encontrei_lugar=4;
-						}	
-				
+				if( current_seat[0]=='a' ){
+					encontrei_lugar=1;
+				}
+				else if( current_seat[0]=='b' ){
+					encontrei_lugar=2;
+				}					
+				else if( current_seat[0]=='c' ){
+					encontrei_lugar=3;
+				}					
+				else if( current_seat[0]=='d' ){
+					encontrei_lugar=4;
+				}	
 				encontrei_lugar= ((current_row_number-1)*4)+ encontrei_lugar;	
-			}
-			 
-						
-			else if( (current_row_number>n_filas_excutivas) && ( (current_seat[0]=='a') || (current_seat[0]=='b') || (current_seat[0]=='c') || (current_seat[0]=='d') || 						(current_seat[0]=='e') || (current_seat[0]=='f') )) {	
-				
-								
-						if( current_seat[0]=='a' ){
-							encontrei_lugar=1;
-						}
-						else if( current_seat[0]=='b' ){
-							encontrei_lugar=2;
-						}					
-						else if( current_seat[0]=='c' ){
-							encontrei_lugar=3;
-						}					
-						else if( current_seat[0]=='d' ){
-							encontrei_lugar=4;
-						}	
-						else if( current_seat[0]=='e' ){
-							encontrei_lugar=5;
-						}					
-						else if( current_seat[0]=='f' ){
-							encontrei_lugar=6;
-						}							
-
+			}		
+			else if( (current_row_number>n_filas_excutivas) && ( (current_seat[0]=='a') || (current_seat[0]=='b') || (current_seat[0]=='c') || (current_seat[0]=='d') || (current_seat[0]=='e') || (current_seat[0]=='f') )) {							
+				if( current_seat[0]=='a' ){
+					encontrei_lugar=1;
+				}
+				else if( current_seat[0]=='b' ){
+					encontrei_lugar=2;
+				}					
+				else if( current_seat[0]=='c' ){
+					encontrei_lugar=3;
+				}					
+				else if( current_seat[0]=='d' ){
+					encontrei_lugar=4;
+				}	
+				else if( current_seat[0]=='e' ){
+					encontrei_lugar=5;
+				}					
+				else if( current_seat[0]=='f' ){
+					encontrei_lugar=6;
+				}							
 				encontrei_lugar= ((current_row_number-1)*6)+ encontrei_lugar-6;				
 			}
 			
@@ -532,29 +490,28 @@ void Efetuar_reserva_de_um_voo() {
 }
 	
 
-			/* 555555555555555555555555555555555555555555555555555555555.222222222222222222222222222222222222222222222222222222222*/
-
+			
 
 int Descobrir_lugar( int current_row_number, int n_filas_excutivas, char current_seat[], int encontrei_lugar ) {
 
 	if( (current_row_number<= n_filas_excutivas) && ( (current_seat[0]=='a') || (current_seat[0]=='b') || (current_seat[0]=='c') || (current_seat[0]=='d') )) {
 				
-				if( current_seat[0]=='a' ){
-					encontrei_lugar=1;
-				}
-				else if( current_seat[0]=='b' ){
-					encontrei_lugar=2;
-				}					
-				else if( current_seat[0]=='c' ){
-					encontrei_lugar=3;
-				}					
-				else if( current_seat[0]=='d' ){
-					encontrei_lugar=4;
-				}	
+		if( current_seat[0]=='a' ){
+			encontrei_lugar=1;
+		}
+		else if( current_seat[0]=='b' ){
+			encontrei_lugar=2;
+		}					
+		else if( current_seat[0]=='c' ){
+			encontrei_lugar=3;
+		}					
+		else if( current_seat[0]=='d' ){
+			encontrei_lugar=4;
+		}	
 										
 		encontrei_lugar= ((current_row_number-1)*4)+ encontrei_lugar;	
 	}
-	else if( (current_row_number>n_filas_excutivas) && ( (current_seat[0]=='a') || (current_seat[0]=='b') || (current_seat[0]=='c') || (current_seat[0]=='d') || 						(current_seat[0]=='e') || (current_seat[0]=='f') )) {	
+	else if( (current_row_number>n_filas_excutivas) && ( (current_seat[0]=='a') || (current_seat[0]=='b') || (current_seat[0]=='c') || (current_seat[0]=='d') || (current_seat[0]=='e') || (current_seat[0]=='f') )) {	
 		
 				if( current_seat[0]=='a' ){
 					encontrei_lugar=1;
@@ -794,8 +751,6 @@ void Alterar_lugar_reserva() {
 	
 }
 
-// 5555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555.3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333
-
 void remover_char( char*s, int pos ) {
 
 	int i=0;
@@ -805,7 +760,6 @@ void remover_char( char*s, int pos ) {
 		s[i]= s[i+1];
 	}
 }
-
 
 int Atribuir_um_aviao_a_um_voo( int argc, char nome_voo[], char tipo_aviao[] ) {
 
