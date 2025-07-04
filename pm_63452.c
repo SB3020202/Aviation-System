@@ -38,8 +38,16 @@ int menu() {
 	scanf(" %d", &input);	
 return input;
 }	
-	 
-	
+
+
+
+/**
+ * Lê o ficheiro de configuração de um Airbus 3xx e conta o número de filas turísticas e executivas.
+ * @param file_name_ Nome do ficheiro de configuração (e.g., "Airbus318").
+ * @param turi       Ponteiro para armazenar o número de filas turísticas.
+ * @param excu       Ponteiro para armazenar o número de filas executivas.
+ * @return 1 em sucesso, -1 em caso de erro ao abrir o ficheiro.
+ */	
 int n_filas_excutivas_turisticas_de_Airbus3xx( char file_name_[] , int *turi, int *excu ) {      	
 	int i= 1;			
 	FILE *fp= fopen( file_name_, "r");
@@ -60,10 +68,19 @@ int n_filas_excutivas_turisticas_de_Airbus3xx( char file_name_[] , int *turi, in
 		} 
 		fclose(fp);	
 	}
-
 return i;
 }
 
+
+
+
+/**
+ * Exibe a estrutura de filas de um avião Airbus 3xx, determinando quantas filas executivas e turísticas existem.
+ * Se for passado o tipo de avião como argumento, usa-o diretamente; caso contrário, solicita ao utilizador.
+ * @param argc_ Número de argumentos passados (deve ser 1 ou 2).
+ * @param argv_ String contendo o tipo de aeronave (e.g., "A318") quando argc_ == 2.
+ * @return Sempre retorna 0.
+ */
 int Mostrar_estrutura_aviao( int argc_, char argv_[] ) { 
 	char aircraft_type[5];
 	char file_name[10]= "Airbus";	
@@ -90,6 +107,21 @@ int Mostrar_estrutura_aviao( int argc_, char argv_[] ) {
 	
 return 0;			
 }
+
+
+
+
+
+
+
+
+/**
+ * Exibe a ocupação de um voo a partir de um ficheiro binário, desenhando um mapa de assentos.
+ * Recebe o ponteiro para o ficheiro já posicionado após o inteiro de identificação do avião.
+ * @param fp                   Ponteiro para o ficheiro binário aberto do voo.
+ * @param n_lugares_executiva  Número total de lugares na classe executiva.
+ * @param n_lugares_turistica  Número total de lugares na classe turística.
+ */
 void Mostrar_ocupacao_voo_auxiliar ( FILE *fp, int n_lugares_excutiva, int n_lugares_turistica ) {  /* Recebe binary file*/
 	int i=0, ascii= 97, trocar_letra= 1, numero_=1 ; // p, trocar_letra, numero=1, ascii= 97; 
 	int l=0, c=0;
@@ -164,13 +196,19 @@ Guarda as structure do file no vetor*/
 	}
 	
 puts("  \n\n\n\n");
-	
-
-
 }
 
 
 
+
+
+
+/**
+ * Solicita ao utilizador o código de voo e lê o ficheiro binário correspondente,
+ * extraindo o tipo de avião (318, 319, 320 ou 321) e delegando em
+ * Mostrar_ocupacao_voo_auxiliar a impressão do mapa de assentos.
+ * @return 0 em todos os casos.
+ */
 int Mostrar_ocupacao_voo () {
 	char fligth_file_name[256]= {0}, file_name_aviao[10]= "Airbus",  aux_guarda_aviao_numero[4]= {0};
 	int n_aviao= 0; 
@@ -215,6 +253,19 @@ int Mostrar_ocupacao_voo () {
 return 0;
 }
 
+
+
+
+
+
+
+/**
+ * Imprime os nomes dos passageiros com reservas para um voo,
+ * organizando primeiro a classe executiva e depois a turística.
+ * @param fp_                  Ponteiro para o ficheiro binário do voo (já posicionado após o inteiro de identificação).
+ * @param n_lugares_turistica  Número de lugares na classe turística.
+ * @param n_lugares_excutiva   Número de lugares na classe executiva.
+ */
 /*Funcao serve para mostar o resultado*/  
 void Mostar_nome_passageiros_com_reservas_num_voo_auxliar( FILE *fp_ , int n_lugares_turistica, int n_lugares_excutiva ) {	
 	DADOS_PARA_CADA_LUGAR lugar_voo_info_318[n_lugares_turistica + n_lugares_excutiva];	
@@ -268,6 +319,12 @@ void Mostar_nome_passageiros_com_reservas_num_voo_auxliar( FILE *fp_ , int n_lug
 	
 }
 
+
+
+
+
+
+
 /* Funcao serve para por de forma completa o nome  do aviao*/ 
 int Mostar_nome_passageiros_com_reservas_num_voo() {
 	char fligth_file_name[256]= {0}, file_name_aviao[10]= "Airbus",  aux_guarda_aviao_numero[4]= {0};
@@ -315,6 +372,10 @@ int Mostar_nome_passageiros_com_reservas_num_voo() {
 return 0;
 
 }
+
+
+
+
 void Efetuar_reserva_de_um_voo() {   
 	char fligth_file_name[256]= {0}, plane_file_name[10]="Airbus";
 	char n_aviao_str[4]= {0};
