@@ -1,6 +1,6 @@
 # ✈️ Airline Reservation System (C Project)
 
-Project of the 1º semester of the 1º year with Final Grade = 17.5/20
+* **Project of the 1º semester of the 1º year with Final Grade = 17.5/20
 A low-level Flight Management System developed in **C** that handles aircraft configurations, seat reservations, and passenger manifests using **binary file persistence** and **direct memory manipulation**.
 
 This project demonstrates proficiency in C programming, specifically in file I/O operations (binary/text), memory management, and algorithm implementation for seating logic.
